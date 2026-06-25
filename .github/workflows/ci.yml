@@ -22,4 +22,4 @@ jobs:
           cache: 'maven'
 
       - name: Build and test with Maven
-        run: mvn -f backend/pom.xml clean verify
+        run: mvn -f Backend/pom.xml -B clean verify
