@@ -1,10 +1,10 @@
-package de.mreinisch.backand;
+package de.mreinisch.backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class BackandApplicationTests {
+class BackendApplicationTests {
 
     @Test
     void contextLoads() {

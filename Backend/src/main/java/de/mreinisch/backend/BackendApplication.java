@@ -1,13 +1,13 @@
-package de.mreinisch.backand;
+package de.mreinisch.backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BackandApplication {
+public class BackendApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BackandApplication.class, args);
+        SpringApplication.run(BackendApplication.class, args);
     }
 
 }
