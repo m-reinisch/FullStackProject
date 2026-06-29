@@ -6,6 +6,11 @@ import java.util.UUID;
 @Service
 public class IdService {
     public String generateId(){
-        return UUID.randomUUID().toString();
+        String uuid= UUID.randomUUID().toString();
+
+        System.out.println(uuid);
+        System.out.println(uuid);
+        System.out.println(uuid);
+        return uuid;
     }
 }
