@@ -1,5 +1,6 @@
 import type {Todo} from "./types.tsx";
 import axios from "axios";
+import {Link} from "react-router-dom";
 
 type TodoProps= {
     todo: Todo,
@@ -37,6 +38,9 @@ export function TodoCard(props: Readonly<TodoProps>) {
         <div id="card">
             <p id="desc">{props.todo.description}</p>
             <p id="stat">{props.todo.status}</p>
+            <Link to={"/todo/edit/" + props.todo.id}>
+                Bearbeiten
+            </Link>
             <p id="buttons">
                 <button id="plus" type={"button"}
                         hidden={

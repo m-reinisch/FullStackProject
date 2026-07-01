@@ -7,6 +7,7 @@ import NewTodo from "./NewTodo.tsx";
 import {Route, Routes } from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from 'axios';
+import EditTodo from "./EditTodo.tsx";
 
 function App() {
     const [todos, setTodos]= useState<Todo[]>([])
@@ -48,6 +49,8 @@ function App() {
                        element={<Canvas cTodos={todos} change={changed} />} />
                 <Route path={"/todo/add"}
                        element={<NewTodo submitTodo={addTodo} />} />
+                <Route path={"/todo/edit/:id"}
+                       element={<EditTodo etodos={todos} change={changed} />} />
             </Routes>
         </>
     )
