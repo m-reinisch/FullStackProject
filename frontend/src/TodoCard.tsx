@@ -37,17 +37,26 @@ export function TodoCard(props: Readonly<TodoProps>) {
         <div id="card">
             <p id="desc">{props.todo.description}</p>
             <p id="stat">{props.todo.status}</p>
-            <button type={"button"} onClick={
-                () => levelUp(props.todo)
-            }>Level up
-            </button>
-            <button id="del" type={"button"}
-                    disabled={
-                        props.todo.status !== "DONE"
-                    }
-                    onClick={
-                        () => {del(props.todo.id)}
-            }>Löschen</button>
+            <p id="buttons">
+                <button id="plus" type={"button"}
+                        hidden={
+                            props.todo.status === "DONE"
+                        }
+                        onClick={
+                            () => levelUp(props.todo)
+                }>Level up
+                </button>
+                <button id="del" type={"button"}
+                        disabled={
+                            props.todo.status !== "DONE"
+                        }
+                        hidden={
+                            props.todo.status !== "DONE"
+                        }
+                        onClick={
+                            () => {del(props.todo.id)}
+                }>Löschen</button>
+            </p>
         </div>
     )
 }
