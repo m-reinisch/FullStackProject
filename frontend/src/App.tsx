@@ -12,7 +12,6 @@ import EditTodo from "./EditTodo.tsx";
 function App() {
     const [todos, setTodos]= useState<Todo[]>([])
     const [change, setChange]= useState<number>(0)
-    const param= useParams();
 
     function loadAllTodos(){
         axios.get("/api/todo")
@@ -51,12 +50,7 @@ function App() {
                 <Route path={"/todo/add"}
                        element={<NewTodo submitTodo={addTodo} />} />
                 <Route path={"/todo/edit/:id"}
-                       element={<EditTodo
-                           eTodo={todos
-                               .filter(t =>
-                                    t.id === param.id)
-                               .map(t => t)}
-                           change={changed} />} />
+                       element={<EditTodo change={changed} />} />
             </Routes>
         </>
     )

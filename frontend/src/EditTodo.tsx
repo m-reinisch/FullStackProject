@@ -1,6 +1,6 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useForm} from "react-hook-form";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import type {Todo} from "./types.tsx";
 import axios from "axios";
 
@@ -9,7 +9,6 @@ type FormValues= {
     status: "OPEN" | "IN_PROGRESS" | "DONE"
 }
 type EditTodoProps= {
-    eTodo: Todo,
     change: () => void
 }
 
@@ -18,7 +17,9 @@ export default function EditTodo(props: Readonly<EditTodoProps>) {
     const {register, handleSubmit, formState: {errors, isValid}} =
         useForm<FormValues>({mode: "onChange"})
     const nav= useNavigate();
-    const [description, setDescription]= useState(props.eTodo.description)
+    const [editTodo, setEditTodo]= useState<Todo>({id: "0",
+                                            description: "12345",
+                                            status: "OPEN"})
 
     function onSubmit(data: FormValues){
         const upTodo: Todo = {
@@ -31,6 +32,16 @@ export default function EditTodo(props: Readonly<EditTodoProps>) {
             .catch( (errors) => console.log(errors) )
         nav("/todos")
     }
+    function loadEdit(){
+        axios.get("api/todo/" + param.id)
+            .then( (resp) =>
+                setEditTodo(resp.data))
+            .catch( (errors) => console.log(errors) )
+    }
+
+    useEffect(() => {
+        loadEdit()
+    }, []);
 
     return(
         <div>
@@ -39,11 +50,8 @@ export default function EditTodo(props: Readonly<EditTodoProps>) {
                 <label>
                     Beschreibung:
                     <input type={"text"}
-                           value={description}
-                           onChange={
-                                (event) =>
-                                    setDescription(event.target.value)
-                            }
+                           value={editTodo.description}
+
                            {...register("description",
                                    {
                                        required: "Description is required.",
@@ -73,8 +81,8 @@ export default function EditTodo(props: Readonly<EditTodoProps>) {
                                         }
                                     }
                         })}>
-                        <option value={props.eTodo.status}>
-                            {props.eTodo.status}
+                        <option value={editTodo.status}>
+                            {editTodo.status}
                         </option>
                         <option value="OPEN">offen</option>
                         <option value="IN_PROGRESS">in arbeit</option>
