@@ -9,7 +9,7 @@ type FormValues= {
     status: "OPEN" | "IN_PROGRESS" | "DONE"
 }
 type EditTodoProps= {
-    etodos: Todo[],
+    eTodo: Todo,
     change: () => void
 }
 
@@ -18,10 +18,7 @@ export default function EditTodo(props: Readonly<EditTodoProps>) {
     const {register, handleSubmit, formState: {errors, isValid}} =
         useForm<FormValues>({mode: "onChange"})
     const nav= useNavigate();
-    const [description, setDescriptionn]=
-        useState({props.etodos
-                .filter(t => t.id === param.id)
-                .map(t => t.description)})
+    const [description, setDescription]= useState(props.eTodo.description)
 
     function onSubmit(data: FormValues){
         const upTodo: Todo = {
@@ -45,7 +42,7 @@ export default function EditTodo(props: Readonly<EditTodoProps>) {
                            value={description}
                            onChange={
                                 (event) =>
-                                    setDescriptionn(event.target.value)
+                                    setDescription(event.target.value)
                             }
                            {...register("description",
                                    {
@@ -64,7 +61,7 @@ export default function EditTodo(props: Readonly<EditTodoProps>) {
                     Status:
                     <select
                         {...register("status", {
-                                required: "Statusa is required.",
+                                required: "Status is required.",
                                 validate:
                                     (val) => {
                                         if (val === "OPEN" ||
@@ -76,12 +73,8 @@ export default function EditTodo(props: Readonly<EditTodoProps>) {
                                         }
                                     }
                         })}>
-                        <option value={props.etodos.filter(t =>
-                            t.id === param.id)
-                            .map(t => t.status)}>
-                            {props.etodos.filter(t =>
-                                t.id === param.id)
-                                .map(t => t.status)}
+                        <option value={props.eTodo.status}>
+                            {props.eTodo.status}
                         </option>
                         <option value="OPEN">offen</option>
                         <option value="IN_PROGRESS">in arbeit</option>

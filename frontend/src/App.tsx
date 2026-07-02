@@ -4,7 +4,7 @@ import NavBar from "./NavBar.tsx";
 import Home from "./Home.tsx";
 import Canvas from "./Canvas.tsx";
 import NewTodo from "./NewTodo.tsx";
-import {Route, Routes } from "react-router-dom";
+import {Route, Routes, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from 'axios';
 import EditTodo from "./EditTodo.tsx";
@@ -12,6 +12,7 @@ import EditTodo from "./EditTodo.tsx";
 function App() {
     const [todos, setTodos]= useState<Todo[]>([])
     const [change, setChange]= useState<number>(0)
+    const param= useParams();
 
     function loadAllTodos(){
         axios.get("/api/todo")
@@ -50,7 +51,12 @@ function App() {
                 <Route path={"/todo/add"}
                        element={<NewTodo submitTodo={addTodo} />} />
                 <Route path={"/todo/edit/:id"}
-                       element={<EditTodo etodos={todos} change={changed} />} />
+                       element={<EditTodo
+                           eTodo={todos
+                               .filter(t =>
+                                    t.id === param.id)
+                               .map(t => t)}
+                           change={changed} />} />
             </Routes>
         </>
     )
