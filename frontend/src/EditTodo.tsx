@@ -14,12 +14,9 @@ type EditTodoProps= {
 
 export default function EditTodo(props: Readonly<EditTodoProps>) {
     const param= useParams();
-    const {register, handleSubmit, formState: {errors, isValid}} =
+    const {register, handleSubmit, reset, formState: {errors, isValid}} =
         useForm<FormValues>({mode: "onChange"})
     const nav= useNavigate();
-    const [editTodo, setEditTodo]= useState<Todo>({id: "0",
-                                            description: "12345",
-                                            status: "OPEN"})
 
     function onSubmit(data: FormValues){
         const upTodo: Todo = {
@@ -33,9 +30,10 @@ export default function EditTodo(props: Readonly<EditTodoProps>) {
         nav("/todos")
     }
     function loadEdit(){
-        axios.get("api/todo/" + param.id)
-            .then( (resp) =>
-                setEditTodo(resp.data))
+        axios.get("/api/todo/" + param.id)
+            .then( (resp) => {
+                reset({ description: resp.data.description, status: resp.data.status })
+            })
             .catch( (errors) => console.log(errors) )
     }
 
@@ -50,8 +48,6 @@ export default function EditTodo(props: Readonly<EditTodoProps>) {
                 <label>
                     Beschreibung:
                     <input type={"text"}
-                           value={editTodo.description}
-
                            {...register("description",
                                    {
                                        required: "Description is required.",
@@ -81,9 +77,6 @@ export default function EditTodo(props: Readonly<EditTodoProps>) {
                                         }
                                     }
                         })}>
-                        <option value={editTodo.status}>
-                            {editTodo.status}
-                        </option>
                         <option value="OPEN">offen</option>
                         <option value="IN_PROGRESS">in arbeit</option>
                         <option value="DONE">beendet</option>
