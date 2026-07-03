@@ -4,7 +4,7 @@ import NavBar from "./NavBar.tsx";
 import Home from "./Home.tsx";
 import Canvas from "./Canvas.tsx";
 import NewTodo from "./NewTodo.tsx";
-import {Route, Routes, useParams} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from 'axios';
 import EditTodo from "./EditTodo.tsx";
@@ -17,7 +17,7 @@ function App() {
         axios.get("/api/todo")
             .then( (response) =>
                 setTodos(response.data))
-            .catch( (errors) => console.log(errors) )
+            .catch( (error_) => console.log(error_) )
     }
     function addTodo(desc: string, stat: string){
         const newTodo: TodoDTO= {
@@ -27,7 +27,7 @@ function App() {
 
         axios.post("/api/todo", newTodo)
             .then( () => changed() )
-            .catch( (errors) => console.log(errors) )
+            .catch( (error_) => console.log(error_) )
     }
     function changed(){
         setChange(change + 1)

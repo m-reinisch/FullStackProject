@@ -1,6 +1,6 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useForm} from "react-hook-form";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import type {Todo} from "./types.tsx";
 import axios from "axios";
 
@@ -26,7 +26,7 @@ export default function EditTodo(props: Readonly<EditTodoProps>) {
         }
         axios.put("/api/todo/" + param.id, upTodo)
             .then( () => props.change() )
-            .catch( (errors) => console.log(errors) )
+            .catch( (error_) => console.log(error_) )
         nav("/todos")
     }
     function loadEdit(){
@@ -34,12 +34,12 @@ export default function EditTodo(props: Readonly<EditTodoProps>) {
             .then( (resp) => {
                 reset({ description: resp.data.description, status: resp.data.status })
             })
-            .catch( (errors) => console.log(errors) )
+            .catch( (error_) => console.log(error_) )
     }
 
     useEffect(() => {
         loadEdit()
-    }, []);
+    });
 
     return(
         <div>
