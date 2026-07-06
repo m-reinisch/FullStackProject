@@ -20,7 +20,7 @@ export default function EditTodo({change}: Readonly<EditTodoProps>) {
 
     function onSubmit(data: FormValues){
         const upTodo: Todo = {
-            id: param.id,
+            id: param.id!,
             description: data.description,
             status: data.status
         }
