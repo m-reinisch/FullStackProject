@@ -12,7 +12,7 @@ type EditTodoProps= {
     change: () => void
 }
 
-export default function EditTodo(props: Readonly<EditTodoProps>) {
+export default function EditTodo({change}: Readonly<EditTodoProps>) {
     const param= useParams();
     const {register, handleSubmit, reset, formState: {errors, isValid}} =
         useForm<FormValues>({mode: "onChange"})
@@ -25,7 +25,7 @@ export default function EditTodo(props: Readonly<EditTodoProps>) {
             status: data.status
         }
         axios.put("/api/todo/" + param.id, upTodo)
-            .then( () => props.change() )
+            .then( () => change() )
             .catch( (error_) => console.log(error_) )
         nav("/todos")
     }
@@ -39,7 +39,7 @@ export default function EditTodo(props: Readonly<EditTodoProps>) {
 
     useEffect(() => {
         loadEdit()
-    });
+    }, []);
 
     return(
         <div>
