@@ -22,7 +22,7 @@ export default function Canvas(props: Readonly<CanvasProps>) {
                 </thead>
                 <tbody>
                 <tr>
-                    <td>
+                    <td id="open">
                         {props.cTodos
                             .filter(t =>
                                 t.status === "OPEN")
@@ -32,7 +32,7 @@ export default function Canvas(props: Readonly<CanvasProps>) {
                                           key={t.id}/>)
                         }
                     </td>
-                    <td>
+                    <td id="progress">
                         {props.cTodos
                             .filter(t =>
                                 t.status === "IN_PROGRESS")
@@ -40,7 +40,7 @@ export default function Canvas(props: Readonly<CanvasProps>) {
                                 <TodoCard todo={t} change={props.change} />)
                         }
                     </td>
-                    <td>
+                    <td id="done">
                         {props.cTodos
                             .filter(t =>
                                 t.status === "DONE")

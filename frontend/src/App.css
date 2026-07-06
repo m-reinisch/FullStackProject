@@ -22,8 +22,46 @@ button {
   justify-content: center;
 }
 
+#open {
+  background-color: deepskyblue;
+}
+
+#progress {
+  background-color: orange;
+}
+
+#done {
+  background-color: greenyellow;
+}
+
 #card {
   border-color: black;
   border-style: solid;
   border-width: 1px;
+  border-radius: 1em;
+  margin: 5px;
+  background-color: white;
+}
+
+#buttons {
+  display: flex;
+  justify-content: right;
+}
+
+[hidden] {
+  display:none !important;
+}
+
+button {
+  margin: 10px;
+}
+
+#desc {
+  font-weight: bold;
+  font-size: larger;
+}
+
+#stat {
+  font-style: italic;
+  font-size: small;
 }

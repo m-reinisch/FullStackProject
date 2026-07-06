@@ -4,9 +4,10 @@ import NavBar from "./NavBar.tsx";
 import Home from "./Home.tsx";
 import Canvas from "./Canvas.tsx";
 import NewTodo from "./NewTodo.tsx";
-import {Route, Routes } from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from 'axios';
+import EditTodo from "./EditTodo.tsx";
 
 function App() {
     const [todos, setTodos]= useState<Todo[]>([])
@@ -16,7 +17,7 @@ function App() {
         axios.get("/api/todo")
             .then( (response) =>
                 setTodos(response.data))
-            .catch( (errors) => console.log(errors) )
+            .catch( (error_) => console.log(error_) )
     }
     function addTodo(desc: string, stat: string){
         const newTodo: TodoDTO= {
@@ -26,7 +27,7 @@ function App() {
 
         axios.post("/api/todo", newTodo)
             .then( () => changed() )
-            .catch( (errors) => console.log(errors) )
+            .catch( (error_) => console.log(error_) )
     }
     function changed(){
         setChange(change + 1)
@@ -48,6 +49,8 @@ function App() {
                        element={<Canvas cTodos={todos} change={changed} />} />
                 <Route path={"/todo/add"}
                        element={<NewTodo submitTodo={addTodo} />} />
+                <Route path={"/todo/edit/:id"}
+                       element={<EditTodo change={changed} />} />
             </Routes>
         </>
     )
