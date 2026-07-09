@@ -1,4 +1,4 @@
-name: RodoApp Deployment
+name: TodoApp Deployment
 
 on:
   push:
