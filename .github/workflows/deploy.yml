@@ -46,8 +46,8 @@ jobs:
         - name: Download Frontend-Build
           uses: actions/download-artifact@v8
           with:
-            name: 'frontend-build'
-            path: 'Backend/src/main/resources/static'
+            name: frontend-build
+            path: Backend/src/main/resources/static
 
         - name: Build Backend mit Maven
           run: mvn -B package --file Backend/pom.xml
@@ -56,7 +56,7 @@ jobs:
           uses: actions/upload-artifact@v7
           with:
             name: backend-artifact
-            path: 'Backend/target/todoapp.jar'
+            path: Backend/target/todoapp.jar
 
   push-to-docker-hub:
     needs: backend-build
@@ -68,7 +68,7 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: backend-artifact
-          path: backend-target/
+          path: Backend/target
 
       - uses: docker/login-action@v3
         with:
