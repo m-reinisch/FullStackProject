@@ -8,10 +8,25 @@ import {Route, Routes} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from 'axios';
 import EditTodo from "./EditTodo.tsx";
+import ProtectedRoutes from "./ProtectedRoutes.tsx";
+
+function login() {
+    const host = window.location.host === 'localhost:5173' ?
+        'http://localhost:8080': window.location.origin
+
+    window.open(host + '/oauth2/authorization/github', '_self')
+}
+function logout() {
+    const host = window.location.host === 'localhost:5173' ?
+        'http://localhost:8080' : window.location.origin
+
+    window.open(host + '/logout', '_self')
+}
 
 function App() {
     const [todos, setTodos]= useState<Todo[]>([])
     const [change, setChange]= useState<number>(0)
+    const [user, setUser] = useState<string | null | undefined>(undefined)
 
     function loadAllTodos(){
         axios.get("/api/todo")
@@ -33,7 +48,18 @@ function App() {
         setChange(change + 1)
     }
 
+    const loadUser = () => {
+        axios.get('/api/auth/me')
+             .then(response => {
+                setUser(response.data)
+             })
+            .catch( () => {
+                setUser(null)
+            })
+    }
+
     useEffect(() => {
+        loadUser();
         loadAllTodos()
     }, [change]);
 
@@ -41,16 +67,19 @@ function App() {
         <>
             <header>
                 <h1>Todo-App</h1>
-                <NavBar />
+                <NavBar user={user} onLogout={logout} />
             </header>
             <Routes>
-                <Route path={"/"} element={<Home />} />
-                <Route path={"/todos"}
-                       element={<Canvas cTodos={todos} change={changed} />} />
-                <Route path={"/todo/add"}
-                       element={<NewTodo submitTodo={addTodo} />} />
-                <Route path={"/todo/edit/:id"}
-                       element={<EditTodo change={changed} />} />
+                <Route path={"/"} element={<Home onLogin={login} />} />
+                <Route element={<ProtectedRoutes user={user} />}>
+                    <Route path={"/todos"}
+                           element={<Canvas cTodos={todos} change={changed} />} />
+                    <Route path={"/todo/add"}
+                           element={<NewTodo submitTodo={addTodo} />} />
+                    <Route path={"/todo/edit/:id"}
+                           element={<EditTodo change={changed} />} />
+                </Route>
+
             </Routes>
         </>
     )

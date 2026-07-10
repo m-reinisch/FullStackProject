@@ -1,4 +1,8 @@
-export default function Home() {
+type HomeProps= {
+    onLogin: () => void
+}
+
+export default function Home(props: Readonly<HomeProps>) {
     return(
         <>
             <h2>Dies ist eine einfache Anwendung zum Verwalten von Aufgaben (Todos)</h2>
@@ -10,6 +14,7 @@ export default function Home() {
                 eingegeben werden und mit 'Anlegen' bestätigt werden.<br/>
                 Mit 'Bearbeiten' lässt sich die Beschreibung und/oder der Status ändern.
             </p>
+            <button onClick={props.onLogin}>Login with GitHub</button>
         </>
     )
 }
