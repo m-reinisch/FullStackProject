@@ -8,6 +8,7 @@ import {Route, Routes} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from 'axios';
 import EditTodo from "./EditTodo.tsx";
+import ProtectedRoutes from "./ProtectedRoutes.tsx";
 
 function login() {
     const host = window.location.host === 'localhost:5173' ?
@@ -19,6 +20,7 @@ function login() {
 function App() {
     const [todos, setTodos]= useState<Todo[]>([])
     const [change, setChange]= useState<number>(0)
+    const [user, setUser] = useState<string | null | undefined>(undefined)
 
     function loadAllTodos(){
         axios.get("/api/todo")
@@ -42,8 +44,11 @@ function App() {
     const loadUser = () => {
         axios.get('/api/auth/me')
              .then(response => {
-                console.log(response.data)
+                setUser(response.data)
              })
+            .catch( () => {
+                setUser(null)
+            })
     }
 
     useEffect(() => {
@@ -59,12 +64,15 @@ function App() {
             </header>
             <Routes>
                 <Route path={"/"} element={<Home onLogin={login} />} />
-                <Route path={"/todos"}
-                       element={<Canvas cTodos={todos} change={changed} />} />
-                <Route path={"/todo/add"}
-                       element={<NewTodo submitTodo={addTodo} />} />
-                <Route path={"/todo/edit/:id"}
-                       element={<EditTodo change={changed} />} />
+                <Route element={<ProtectedRoutes user={user} />}>
+                    <Route path={"/todos"}
+                           element={<Canvas cTodos={todos} change={changed} />} />
+                    <Route path={"/todo/add"}
+                           element={<NewTodo submitTodo={addTodo} />} />
+                    <Route path={"/todo/edit/:id"}
+                           element={<EditTodo change={changed} />} />
+                </Route>
+
             </Routes>
         </>
     )
