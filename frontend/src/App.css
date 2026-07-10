@@ -6,6 +6,7 @@ button {
   color: white;
   background-color: grey;
   width: fit-content;
+  margin: 10px;
 }
 
 #del {
@@ -20,6 +21,18 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+#navbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 50px;
+  align-items: center;
+}
+
+#usr {
+  color: red;
 }
 
 #open {
@@ -50,10 +63,6 @@ button {
 
 [hidden] {
   display:none !important;
-}
-
-button {
-  margin: 10px;
 }
 
 #desc {

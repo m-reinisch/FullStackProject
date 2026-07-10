@@ -29,7 +29,8 @@ public class SecurityConfig {
             .exceptionHandling(ex -> ex
                     .authenticationEntryPoint(
                             new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)
-                    ));
+                    ))
+            .logout(l -> l.logoutSuccessUrl(appUrl));
         return http.build();
     }
 }
