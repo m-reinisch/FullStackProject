@@ -1,5 +1,6 @@
 package de.mreinisch.backend.model;
 
+import lombok.Builder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -8,7 +9,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @param id of App-User
  * @param username of App-User
  */
-@Document("AppUser")
+@Document("AppUsers")
+@Builder
 public record AppUser(
         @Id
         String id,
