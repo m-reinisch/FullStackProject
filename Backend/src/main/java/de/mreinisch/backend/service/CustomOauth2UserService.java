@@ -21,7 +21,7 @@ public class CustomOauth2UserService extends DefaultOAuth2UserService {
         OAuth2User oAuth2User = super.loadUser(userRequest);
         AppUser appUser= userRepo.findById(oAuth2User.getName())
                 .orElseGet(() -> createUser(oAuth2User));
-        
+
         return oAuth2User;
     }
 
